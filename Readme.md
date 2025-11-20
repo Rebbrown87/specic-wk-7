@@ -1,0 +1,10 @@
+This audit evaluates racial bias in the COMPAS recidivism risk scores, focusing on error rate disparities between Non‑Caucasian and Caucasian defendants. Using AI Fairness 360, we treated “High Risk” as a positive prediction and compared it against two‑year recidivism labels. False positive rate (FPR) captures how often individuals are flagged high risk despite not recidivating; false negative rate (FNR) reflects misses among those who do recidivate.
+
+Our analysis found that the FPR for Non‑Caucasian defendants is higher than for Caucasian defendants, indicating more Non‑Caucasian individuals are incorrectly classified as high risk. Conversely, the FNR can be higher for Caucasian defendants, meaning more recidivators in that group are missed. This error asymmetry mirrors known critiques: the system may be harsher (more false alarms) for Non‑Caucasian individuals while being more lenient (more misses) for Caucasian individuals. Precision differences and selection rate disparities further suggest unequal calibration across groups. Disparate impact values below the common 0.8 threshold reinforce concerns about adverse effects on the unprivileged group.
+
+To explore mitigation, we applied the Disparate Impact Remover, a pre‑processing method that repairs feature distributions with respect to the protected attribute while preserving utility. Training a baseline classifier on repaired data reduced the FPR gap and improved disparate impact towards parity, with modest changes in accuracy. While pre‑processing is model‑agnostic and easy to deploy, it may not fully address calibration differences.
+
+Recommended remediation includes: (1) adopting group‑aware thresholds or post‑processing methods (e.g., equalized odds) to align FPR/FNR across races; 
+(2) conducting calibration audits (Brier score, reliability plots) by group and recalibrating as needed; (3) improving data quality and documentation to reduce proxy bias; 
+(4) ongoing monitoring with AIF360 to track fairness metrics over time; and 
+(5) engaging stakeholders to define fairness goals that balance error trade‑offs transparently.
